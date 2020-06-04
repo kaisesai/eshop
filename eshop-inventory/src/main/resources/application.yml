@@ -7,8 +7,7 @@ logging:
     # 可以打印 sql
     com.liukai.eshop.inventory: debug
     com.baomidou.mybatisplus: debug
-
-#  path: ./
+# 数据源
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,10 +21,25 @@ spring:
 
   #mybatis:
   #  type-aliases-package: cn.mrcode.cachepdp.eshop.inventory.model
+  redis:
+    #    cluster:
+    #      nodes:
+    #        - XX:XX
+    #
+    #      max-redirects: 3  # 获取失败 最大重定向次数
+    timeout: 6000 # 连接超时时长（毫秒）
+    lettuce:
+      pool:
+        max-active: 1000  #连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10 # 连接池中的最大空闲连接
+        min-idle: 5 # 连接池中的最小空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    host: ENC(RBZTXY1qT1QNPZEShS2+uADER6CG3vXnX7s+ZdyurCZVf5rw0ClBoqJMrTfbC57k)
+    port: ENC(NRbbtdxTdn0ThS/z2EFDg/ZAxEh6LhlQU4IIfk0SNBzaLXTwgfwVFcS7hYNnVYUF)
+    password: ENC(15pHOBVxjG2BBPYib/rNlfnl4VdnX21VAsdNq3VcFs18o3cjdPSFyrJ5aBsSL+ua)
 #  mapper-locations: classpath*:mapper/*.xml
 
 # 数据库配置信息加密
-# java -jar --jasypt.encryptor.password=EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
 #jasypt:
 #  encryptor:
-#        password: ${JASYPT_ENCRYPTOR_PASSWORD:}
+#        password: 1

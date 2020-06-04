@@ -1,6 +1,7 @@
 package com.liukai.eshop.inventory.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.liukai.eshop.inventory.entity.User;
 
 /**
@@ -10,5 +11,7 @@ import com.liukai.eshop.inventory.entity.User;
  * @since 2020-06-03 19:27:43
  */
 public interface UserService extends IService<User> {
+
+  User getCachedUserInfo(Long id) throws JsonProcessingException;
 
 }

@@ -1,5 +1,6 @@
 package com.liukai.eshop.inventory.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.liukai.eshop.inventory.entity.User;
 import com.liukai.eshop.inventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class UserController {
   @GetMapping("selectOne")
   public User selectOne(@RequestParam Long id) {
     return this.userService.getById(id);
+  }
+
+  @GetMapping("selectOneFromCache")
+  public User selectOneFromCache(@RequestParam Long id) throws JsonProcessingException {
+    return this.userService.getCachedUserInfo(id);
   }
 
   @GetMapping("userList")
