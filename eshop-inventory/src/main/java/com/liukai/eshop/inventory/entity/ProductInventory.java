@@ -15,7 +15,17 @@ import java.io.Serializable;
 @Data
 public class ProductInventory extends Common implements Serializable {
 
+  /**
+   * 默认的一个实例，id 为 -1
+   */
+  public static final ProductInventory DEFAULT_FAIL_INSTANCE;
+
   private static final long serialVersionUID = 108080540113010836L;
+
+  static {
+    DEFAULT_FAIL_INSTANCE = new ProductInventory();
+    DEFAULT_FAIL_INSTANCE.setId(-1L);
+  }
 
   /**
    * 主键
@@ -26,5 +36,10 @@ public class ProductInventory extends Common implements Serializable {
    * 商品ID
    */
   private Long productId;
+
+  /**
+   * 库存数量
+   */
+  private Long inventoryCnt;
 
 }
