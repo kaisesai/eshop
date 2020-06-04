@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.0.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: "org.springframework.boot"
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.liukai.eshop'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'mysql:mysql-connector-java'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'io.projectreactor:reactor-test'
+        implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+        testImplementation 'junit:junit:4.13'
+    }
+
+//    test {
+//        useJUnitPlatform()
+//    }
+
+}

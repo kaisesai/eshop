@@ -1,0 +1,31 @@
+server:
+  # 我这里指定 6000 会发现起来之后不能访问到
+  port: 8080
+logging:
+  level:
+    root: info
+    # 可以打印 sql
+    com.liukai.eshop.inventory: debug
+    com.baomidou.mybatisplus: debug
+
+#  path: ./
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(aLfHJooH7jVYnA3iqtdMt4tvkn1eYdUbnqyhLS+5h/pK5lHqkBP/KfcxxlPUI2Q5Fb2jphQsuXP/PewuacfZIPbaohy6iMx7puiX99+TtKHdZDv6gHHYaPA0+fogMrmC5hTObpm1ve5GD18/IEhkyy1XDo92XPjeeM7SxT6RCd2tfFP7QO30W9pZmjQkO2y79K+IjZzVUSNVO+OLaNexFtMXHYe5bL9QRkumyZcFxMgByMMN8qEbnGFR4BGInp/Y)
+    username: ENC(kZ3hpwvQ3769+6JoU+f4BuN8ycfaYEiLQ1Zq7vDJQVOLIVI4ohN3gU5PLYDhE6GJ)
+    password: ENC(rEGN76ySzkPj8rzkAULdp91KpXBy2u42KTyb+jhbuQFd18m+wJ2ioxnKeA5rzDvP)
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    property-naming-strategy: SNAKE_CASE
+
+  #mybatis:
+  #  type-aliases-package: cn.mrcode.cachepdp.eshop.inventory.model
+#  mapper-locations: classpath*:mapper/*.xml
+
+# 数据库配置信息加密
+# java -jar --jasypt.encryptor.password=EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
+#jasypt:
+#  encryptor:
+#        password: ${JASYPT_ENCRYPTOR_PASSWORD:}

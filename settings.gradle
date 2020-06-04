@@ -1,0 +1,3 @@
+rootProject.name = 'eshop'
+include 'eshop-inventory'
+
