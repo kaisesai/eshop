@@ -29,16 +29,25 @@ public class ProductInventoryCacheRefreshRequest implements Request {
   public void process() {
     // 1. 读取数据库数据
     ProductInventory productInventory = productInventoryService.getByProductId(productId);
+    log.info("查询数据库，product_id:{}, productInventory:{}", productId, productInventory);
 
-    log.info("写请求：模拟写耗时操作，休眠 10 秒钟");
-    try {
-      TimeUnit.SECONDS.sleep(10);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    // log.debug("刷新缓存操作：写请求：模拟写耗时操作，休眠 10 秒钟");
+    // try {
+    //   TimeUnit.SECONDS.sleep(10);
+    // } catch (InterruptedException e) {
+    //   e.printStackTrace();
+    // }
+
+    if (productInventory == null) {
+      log.info("数据库中没有找到数据，product_id:{}", productId);
+      // 写入一个默认的数据
+      productInventoryService
+        .setCache(ProductInventory.builder().id(-1L).productId(productId).build());
+    } else {
+      // 2. 设置缓存
+      productInventoryService.setCache(productInventory);
     }
 
-    // 2. 设置缓存
-    productInventoryService.setCache(productInventory);
   }
 
   @Override

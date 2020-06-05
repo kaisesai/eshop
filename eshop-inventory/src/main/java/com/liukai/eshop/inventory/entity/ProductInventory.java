@@ -1,7 +1,6 @@
 package com.liukai.eshop.inventory.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -13,6 +12,9 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProductInventory extends Common implements Serializable {
 
   /**

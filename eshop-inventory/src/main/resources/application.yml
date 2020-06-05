@@ -5,7 +5,7 @@ logging:
   level:
     root: info
     # 可以打印 sql
-    com.liukai.eshop.inventory: debug
+    com.liukai.eshop.inventory: info
     com.baomidou.mybatisplus: debug
 # 数据源
 spring:
@@ -14,13 +14,8 @@ spring:
     url: ENC(aLfHJooH7jVYnA3iqtdMt4tvkn1eYdUbnqyhLS+5h/pK5lHqkBP/KfcxxlPUI2Q5Fb2jphQsuXP/PewuacfZIPbaohy6iMx7puiX99+TtKHdZDv6gHHYaPA0+fogMrmC5hTObpm1ve5GD18/IEhkyy1XDo92XPjeeM7SxT6RCd2tfFP7QO30W9pZmjQkO2y79K+IjZzVUSNVO+OLaNexFtMXHYe5bL9QRkumyZcFxMgByMMN8qEbnGFR4BGInp/Y)
     username: ENC(kZ3hpwvQ3769+6JoU+f4BuN8ycfaYEiLQ1Zq7vDJQVOLIVI4ohN3gU5PLYDhE6GJ)
     password: ENC(rEGN76ySzkPj8rzkAULdp91KpXBy2u42KTyb+jhbuQFd18m+wJ2ioxnKeA5rzDvP)
-#  jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    time-zone: GMT+8
-#    property-naming-strategy: SNAKE_CASE
 
-  #mybatis:
-  #  type-aliases-package: cn.mrcode.cachepdp.eshop.inventory.model
+  # redis 配置
   redis:
     #    cluster:
     #      nodes:

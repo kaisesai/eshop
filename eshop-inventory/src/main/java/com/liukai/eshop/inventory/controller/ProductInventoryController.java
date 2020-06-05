@@ -62,6 +62,7 @@ public class ProductInventoryController {
       ProductInventoryCacheRefreshRequest request = new ProductInventoryCacheRefreshRequest(
         productId, productInventoryService);
 
+      log.info("创建一个请求：{}", request.getClass());
       // 执行请求
       requestAsyncProcessService.process(request);
       ProductInventory productInventory;
@@ -70,23 +71,31 @@ public class ProductInventoryController {
       long startTime = System.currentTimeMillis();
       long waitTime = 0L;
 
-      while (waitTime <= 200) {
+      int limitTime = 200;
+      int sleepTime = 20;
+      while (waitTime <= limitTime) {
+
         // 等待超过 200ms 直接退出
         // 尝试查询缓存
         productInventory = productInventoryService.getCache(productId);
+        log.debug("查询缓存数据，productId：{}，productInventory：{}", productId, productInventory);
 
         if (productInventory != null) {
           // 查到了直接返回结果
+          log.debug("命中缓存数据，productId：{}，productInventory：{}", productId, productInventory);
           return productInventory;
         } else {
+          log.debug("没有命中缓存数据，productId：{}，sleep {}ms...", productId, sleepTime);
           // 没有查到，等待一段时间
-          Thread.sleep(20);
+          Thread.sleep(sleepTime);
         }
         waitTime = System.currentTimeMillis() - startTime;
       }
 
       // 直接查询数据库
       productInventory = productInventoryService.getByProductId(productId);
+      log.debug("读取缓存超过了 {}ms，查询数据库，productId：{}，productInventory：{}", limitTime, productId,
+                productInventory);
       if (productInventory != null) {
         return productInventory;
       }
@@ -95,11 +104,9 @@ public class ProductInventoryController {
       log.warn("InterruptedException", e);
     }
 
+    log.debug("数据库中不存在数据，返回一个默认值，productId：{}", productId);
     // 没有查找到则返回 id 为 -1 的值
-    ProductInventory productInventory = new ProductInventory();
-    productInventory.setId(-1L);
-    productInventory.setProductId(productId);
-    return productInventory;
+    return ProductInventory.DEFAULT_FAIL_INSTANCE;
   }
 
   /**

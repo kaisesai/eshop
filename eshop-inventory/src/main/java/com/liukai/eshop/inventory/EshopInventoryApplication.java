@@ -32,20 +32,4 @@ public class EshopInventoryApplication {
     return paginationInterceptor;
   }
 
-  // @Bean
-  // public JedisCluster jedisCluster() {
-  //   // 这里使用 redis-trib.rb check 192.168.99.170:7001 找到 3 个 master 节点，添加进来
-  //   Set<HostAndPort> jedisClusterNodes = new HashSet<>();
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7001));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7002));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7003));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7004));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7005));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7006));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7007));
-  //   jedisClusterNodes.add(new HostAndPort("39.96.95.51", 7008));
-  //   JedisCluster jedisCluster = new JedisCluster(jedisClusterNodes);
-  //   return jedisCluster;
-  // }
-
 }

@@ -26,16 +26,19 @@ public class ProductInventoryDBUpdateRequest implements Request {
   public void process() {
     // 1. 删除缓存
     productInventoryService.removeCache(productInventory.getProductId());
+    log.info("删除缓存数据，product_id:{}", productInventory.getProductId());
 
-    log.info("写请求：模拟写耗时操作，休眠 10 秒钟");
-    try {
-      TimeUnit.SECONDS.sleep(10);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    // log.debug("更新数据库操作：写请求：模拟写耗时操作，休眠 10 秒钟");
+    // try {
+    //   TimeUnit.SECONDS.sleep(10);
+    // } catch (InterruptedException e) {
+    //   e.printStackTrace();
+    // }
 
     // 2. 更新缓存
     productInventoryService.updateById(productInventory);
+    log.debug("更新数据库，product_id:{}，productInventory:{}", productInventory.getProductId(),
+             productInventory);
   }
 
   @Override
