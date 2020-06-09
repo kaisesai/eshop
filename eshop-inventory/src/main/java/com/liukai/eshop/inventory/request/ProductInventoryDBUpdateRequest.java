@@ -1,10 +1,8 @@
 package com.liukai.eshop.inventory.request;
 
-import com.liukai.eshop.inventory.entity.ProductInventory;
 import com.liukai.eshop.inventory.service.ProductInventoryService2;
+import com.liukai.eshop.model.entity.ProductInventory;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 商品库存数据更新请求
@@ -38,7 +36,7 @@ public class ProductInventoryDBUpdateRequest implements Request {
     // 2. 更新缓存
     productInventoryService.updateById(productInventory);
     log.debug("更新数据库，product_id:{}，productInventory:{}", productInventory.getProductId(),
-             productInventory);
+              productInventory);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package com.liukai.eshop.inventory.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.liukai.eshop.inventory.entity.ProductInventory;
+import com.liukai.eshop.model.entity.ProductInventory;
 
 /**
  * 商品库存 service
@@ -19,7 +19,6 @@ public interface ProductInventoryService2 extends IService<ProductInventory> {
 
   ProductInventory getByProductId(Long productId);
 
-
   /**
    * 删除库存缓存
    *
@@ -33,8 +32,5 @@ public interface ProductInventoryService2 extends IService<ProductInventory> {
    * @param productInventory 商品库存
    */
   void setCache(ProductInventory productInventory);
-
-
-
 
 }

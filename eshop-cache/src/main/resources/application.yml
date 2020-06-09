@@ -1,14 +1,11 @@
 server:
-  # 我这里指定 6000 会发现起来之后不能访问到
-  port: 8080
-#  根路径
-#  servlet:
-#    context-path: /eshop-inventory
+  port: 8090
+
 logging:
   level:
     root: info
+    com.liukai.eshop.cache: debug
     # 可以打印 sql
-    com.liukai.eshop.inventory: info
     com.baomidou.mybatisplus: debug
 # 数据源
 spring:
@@ -35,12 +32,18 @@ spring:
     host: ENC(RBZTXY1qT1QNPZEShS2+uADER6CG3vXnX7s+ZdyurCZVf5rw0ClBoqJMrTfbC57k)
     port: ENC(NRbbtdxTdn0ThS/z2EFDg/ZAxEh6LhlQU4IIfk0SNBzaLXTwgfwVFcS7hYNnVYUF)
     password: ENC(15pHOBVxjG2BBPYib/rNlfnl4VdnX21VAsdNq3VcFs18o3cjdPSFyrJ5aBsSL+ua)
-  #  mapper-locations: classpath*:mapper/*.xml
+
+
+
+  cache:
+    # ehcache2.x
+    type: ehcache
+    ehcache:
+      config: classpath:/ehcache2.xml
+    # ehcache3.x
   application:
-    name: eshop-inventory
+    name: eshop-cache
 
+#    jcache:
+#      config: classpath:ehcache.xml
 
-# 数据库配置信息加密
-#jasypt:
-#  encryptor:
-#        password: 1

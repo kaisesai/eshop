@@ -1,7 +1,7 @@
 package com.liukai.eshop.inventory.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.liukai.eshop.inventory.entity.ProductInventory;
+import com.liukai.eshop.model.entity.ProductInventory;
 
 /**
  * (ProductInventory)表数据库访问层

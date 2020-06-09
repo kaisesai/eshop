@@ -1,4 +1,4 @@
-package com.liukai.eshop.inventory.config;
+package com.liukai.eshop.common.web.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -95,7 +95,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
   /**
    * 统一输出风格
-   * See {@link com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy} for details.
+   * See {@link PropertyNamingStrategy.SnakeCaseStrategy} for details.
    *
    * @param converters
    */

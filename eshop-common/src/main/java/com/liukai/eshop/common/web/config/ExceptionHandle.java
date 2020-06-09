@@ -1,7 +1,7 @@
-package com.liukai.eshop.inventory.config;
+package com.liukai.eshop.common.web.config;
 
-import com.liukai.eshop.inventory.model.Result;
-import com.liukai.eshop.inventory.model.ResultCode;
+import com.liukai.eshop.common.web.model.Result;
+import com.liukai.eshop.common.web.model.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;

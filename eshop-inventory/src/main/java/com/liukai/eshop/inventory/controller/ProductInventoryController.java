@@ -1,10 +1,10 @@
 package com.liukai.eshop.inventory.controller;
 
-import com.liukai.eshop.inventory.entity.ProductInventory;
 import com.liukai.eshop.inventory.request.ProductInventoryCacheRefreshRequest;
 import com.liukai.eshop.inventory.request.ProductInventoryDBUpdateRequest;
 import com.liukai.eshop.inventory.service.ProductInventoryService2;
 import com.liukai.eshop.inventory.service.RequestAsyncProcessService;
+import com.liukai.eshop.model.entity.ProductInventory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

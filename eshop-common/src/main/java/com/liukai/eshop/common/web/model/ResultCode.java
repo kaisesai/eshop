@@ -1,4 +1,4 @@
-package com.liukai.eshop.inventory.model;
+package com.liukai.eshop.common.web.model;
 
 /**
  * @author liukai

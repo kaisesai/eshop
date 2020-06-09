@@ -1,6 +1,6 @@
 package com.liukai.eshop.inventory.request;
 
-import com.alibaba.fastjson.JSON;
+import com.liukai.eshop.common.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -33,7 +33,7 @@ public class RequestProcessorTask implements Callable<Boolean> {
       try {
 
         Request request = queue.take();
-        String requestStr = JSON.toJSONString(request);
+        String requestStr = JsonUtils.writeValueAsString(request);
         log.info("处理请求：{}", requestStr);
 
         if (!request.isForceRefresh()) {

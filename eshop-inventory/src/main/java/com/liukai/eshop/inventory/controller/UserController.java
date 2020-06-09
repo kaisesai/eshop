@@ -1,8 +1,8 @@
 package com.liukai.eshop.inventory.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.liukai.eshop.inventory.entity.User;
 import com.liukai.eshop.inventory.service.UserService;
+import com.liukai.eshop.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

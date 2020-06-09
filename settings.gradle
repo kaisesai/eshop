@@ -1,3 +1,6 @@
 rootProject.name = 'eshop'
 include 'eshop-inventory'
+include 'eshop-cache'
+include 'eshop-model'
+include 'eshop-common'
 

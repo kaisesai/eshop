@@ -1,6 +1,7 @@
 version '0.0.1-SNAPSHOT'
 
 dependencies {
+    // model
     implementation project(':eshop-model')
     implementation project(':eshop-common')
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -10,4 +11,14 @@ dependencies {
 //    implementation 'com.alibaba:fastjson:1.2.70'
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.3.2'
+    compile 'org.redisson:redisson-spring-boot-starter:3.13.0'
+
+    // 缓存 ehcache
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    // ehcache 3.x
+//    implementation 'org.ehcache:ehcache'
+//    implementation 'javax.cache:cache-api'
+    // ehcache 2.x
+    implementation 'net.sf.ehcache:ehcache'
+
 }

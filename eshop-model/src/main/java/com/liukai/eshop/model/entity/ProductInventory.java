@@ -1,4 +1,4 @@
-package com.liukai.eshop.inventory.entity;
+package com.liukai.eshop.model.entity;
 
 import lombok.*;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductInventory extends Common implements Serializable {
+public class ProductInventory extends Common{
 
   /**
    * 默认的一个实例，id 为 -1

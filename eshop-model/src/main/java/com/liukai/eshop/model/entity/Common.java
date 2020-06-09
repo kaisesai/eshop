@@ -1,9 +1,9 @@
-package com.liukai.eshop.inventory.entity;
+package com.liukai.eshop.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class Common {
+public class Common implements Serializable {
 
   // private Long id;
 

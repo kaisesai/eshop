@@ -2,7 +2,7 @@ package com.liukai.eshop.inventory.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.liukai.eshop.inventory.entity.User;
+import com.liukai.eshop.model.entity.User;
 
 /**
  * (User)表服务接口

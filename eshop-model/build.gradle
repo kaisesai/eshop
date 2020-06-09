@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+//    id 'maven-publish'
+}
+
+jar {
+    enabled = true
+}
+
+// 重写 bootJar 插件
+bootJar {
+    enabled = false
+}
+
+//// 重写 publishing 插件
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            groupId group
+////            artifactId 'hello-service-api'
+//            version version
+//
+//            from components.java
+//            // more goes in here
+//        }
+//    }
+//
+//    repositories {
+//        mavenLocal()
+//    }
+//}
+

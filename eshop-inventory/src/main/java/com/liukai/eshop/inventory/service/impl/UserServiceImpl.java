@@ -1,11 +1,11 @@
 package com.liukai.eshop.inventory.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.liukai.eshop.inventory.entity.User;
+import com.liukai.eshop.common.util.JsonUtils;
 import com.liukai.eshop.inventory.mapper.UserMapper;
 import com.liukai.eshop.inventory.service.UserService;
+import com.liukai.eshop.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,13 +33,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     String userStr = stringRedisTemplate.opsForValue().get(userCacheKey);
     log.info("read user cache: {}", userStr);
     if (StringUtils.hasText(userStr)) {
-      return JSON.parseObject(userStr, User.class);
+      return JsonUtils.readValue(userStr, User.class);
     }
     // 查数据库
     User user = super.getById(id);
     if (user != null) {
       // 写入缓存
-      userStr = JSON.toJSONString(user);
+      userStr = JsonUtils.writeValueAsString(user);
       stringRedisTemplate.opsForValue().set(userCacheKey, userStr);
       log.info("write user cache: {}", userStr);
     }

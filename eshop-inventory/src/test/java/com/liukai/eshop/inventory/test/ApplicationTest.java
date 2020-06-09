@@ -1,6 +1,6 @@
 package com.liukai.eshop.inventory.test;
 
-import com.liukai.eshop.inventory.EshopInventoryApplication;
+import com.liukai.eshop.inventory.InventoryApplication;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = EshopInventoryApplication.class)
+@SpringBootTest(classes = InventoryApplication.class)
 public class ApplicationTest {
 
   @Autowired

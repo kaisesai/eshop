@@ -1,9 +1,7 @@
-package com.liukai.eshop.inventory.entity;
+package com.liukai.eshop.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 
 /**
  * (User)实体类
@@ -13,7 +11,7 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class User extends Common implements Serializable {
+public class User extends Common {
 
   private static final long serialVersionUID = 410237152578201438L;
 

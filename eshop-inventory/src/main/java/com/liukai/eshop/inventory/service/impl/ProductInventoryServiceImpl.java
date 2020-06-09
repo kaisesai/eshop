@@ -1,12 +1,12 @@
 package com.liukai.eshop.inventory.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.liukai.eshop.inventory.entity.ProductInventory;
+import com.liukai.eshop.common.util.JsonUtils;
 import com.liukai.eshop.inventory.mapper.ProductInventoryMapper;
 import com.liukai.eshop.inventory.service.ProductInventoryService2;
 import com.liukai.eshop.inventory.util.RedisUtils;
+import com.liukai.eshop.model.entity.ProductInventory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,7 +36,7 @@ public class ProductInventoryServiceImpl
     if (StringUtils.isEmpty(value)) {
       return null;
     }
-    return JSON.parseObject(value, ProductInventory.class);
+    return JsonUtils.readValue(value, ProductInventory.class);
   }
 
   @Override
@@ -57,7 +57,7 @@ public class ProductInventoryServiceImpl
   public void setCache(ProductInventory productInventory) {
     String key = RedisUtils
       .generatorValueKey(REDIS_CACHE_PREFIX_KEY_PRODUCT_INVENTORY, productInventory.getProductId());
-    String jsonString = JSON.toJSONString(productInventory);
+    String jsonString = JsonUtils.writeValueAsString(productInventory);
     stringRedisTemplate.opsForValue().set(key, jsonString);
     log.info("delete product_inventory cache key:{}", key);
   }

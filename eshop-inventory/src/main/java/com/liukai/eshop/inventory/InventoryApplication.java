@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author liukai
  */
 @EnableTransactionManagement
-@SpringBootApplication
+// 扫描指定的包，这些包中含有 web 公共配置
+@SpringBootApplication(scanBasePackages = "com.liukai.eshop")
 @MapperScan("com.liukai.eshop.inventory.mapper")
-public class EshopInventoryApplication {
+public class InventoryApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(EshopInventoryApplication.class, args);
+    SpringApplication.run(InventoryApplication.class, args);
   }
 
   @Bean
