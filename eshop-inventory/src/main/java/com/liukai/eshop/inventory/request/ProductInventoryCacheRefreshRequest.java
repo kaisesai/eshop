@@ -39,8 +39,7 @@ public class ProductInventoryCacheRefreshRequest implements Request {
     if (productInventory == null) {
       log.info("数据库中没有找到数据，product_id:{}", productId);
       // 写入一个默认的数据
-      productInventoryService
-        .setCache(ProductInventory.builder().id(-1L).productId(productId).build());
+      productInventoryService.setCache(ProductInventory.getDefaultFailInstance(-1L, productId));
     } else {
       // 2. 设置缓存
       productInventoryService.setCache(productInventory);

@@ -1,4 +1,4 @@
-package com.liukai.eshop.inventory.util;
+package com.liukai.eshop.common.util;
 
 /**
  * Redis 工具类

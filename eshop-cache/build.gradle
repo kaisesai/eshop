@@ -21,4 +21,8 @@ dependencies {
     // ehcache 2.x
     implementation 'net.sf.ehcache:ehcache'
 
+    // kafka
+//    implementation 'org.apache.kafka:kafka-streams'
+    implementation 'org.springframework.kafka:spring-kafka'
+
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -54,6 +55,9 @@ public class JsonUtils {
 
   public static <T> T readValue(String content, Class<T> valueType) {
     try {
+      if (StringUtils.isEmpty(content)) {
+        return null;
+      }
       return OBJECT_MAPPER.readValue(content, valueType);
     } catch (JsonProcessingException e) {
       log.error("read value fail, content:{}, valueType:{}, exception:{}", content, valueType,

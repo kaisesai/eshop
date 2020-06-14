@@ -14,13 +14,13 @@ import java.util.Date;
 @Accessors(chain = true)
 public class Common implements Serializable {
 
-  // private Long id;
+  protected Long id;
 
   // @TableLogic
   // private Integer deleted;
 
-  private Date createTime;
+  protected Date createTime;
 
-  private Date updateTime;
+  protected Date updateTime;
 
 }

@@ -36,6 +36,11 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
                                 Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                 ServerHttpRequest request, ServerHttpResponse response) {
 
+    // 处理异常返回的信息
+    if (body instanceof Result) {
+      return body;
+    }
+
     // 处理 string 字符串
     if (body instanceof String) {
       return JsonUtils.writeValueAsString(Result.succ(body));

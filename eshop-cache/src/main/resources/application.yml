@@ -7,13 +7,19 @@ logging:
     com.liukai.eshop.cache: debug
     # 可以打印 sql
     com.baomidou.mybatisplus: debug
+#    org:
+#      springframework:
+#        kafka: ERROR # spring-kafka INFO 日志太多了，所以我们限制只打印 ERROR 级别
+#      apache:
+#        kafka: ERROR # kafka INFO 日志太多了，所以我们限制只打印 ERROR 级别
 # 数据源
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(aLfHJooH7jVYnA3iqtdMt4tvkn1eYdUbnqyhLS+5h/pK5lHqkBP/KfcxxlPUI2Q5Fb2jphQsuXP/PewuacfZIPbaohy6iMx7puiX99+TtKHdZDv6gHHYaPA0+fogMrmC5hTObpm1ve5GD18/IEhkyy1XDo92XPjeeM7SxT6RCd2tfFP7QO30W9pZmjQkO2y79K+IjZzVUSNVO+OLaNexFtMXHYe5bL9QRkumyZcFxMgByMMN8qEbnGFR4BGInp/Y)
-    username: ENC(kZ3hpwvQ3769+6JoU+f4BuN8ycfaYEiLQ1Zq7vDJQVOLIVI4ohN3gU5PLYDhE6GJ)
-    password: ENC(rEGN76ySzkPj8rzkAULdp91KpXBy2u42KTyb+jhbuQFd18m+wJ2ioxnKeA5rzDvP)
+#    url: jdbc:mysql://127.0.0.1:3306/eshop?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: ENC(xnRSJ7Zx4n4rqFx4yZGnOz738Cl63YwpqWuIAtgbYlapj6GbbjuSKHVEVcGNqgac/bmIBwI4Uycg7NQbAb0IcJT6WRXCz4uT7/Z4KnVl4WAVv+t1wFZzCYAVMeUnWv4UAByixYAIdGLBrqaUe6rWV04QQ4Q0oi8rvlIWt/pdCoNw46iB/5F/bDk4EOCXEN/j)
+    username: ENC(6IBWzB+q+qamnZey0dQRS1StZ3qIKV+1/f8k9m4dSeSv3woXRTMlAnEGxFIaR5zz)
+    password: ENC(Oe20yK7y64jgEn9Ms+vXTW+rZCuk6DK1SuVJfHcMXGqm5z1n5VqI3A0+jhFLruV5)
 
   # redis 配置
   redis:
@@ -29,11 +35,11 @@ spring:
         max-idle: 10 # 连接池中的最大空闲连接
         min-idle: 5 # 连接池中的最小空闲连接
         max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    #    host: 127.0.0.1
+    #    port: 6379
     host: ENC(RBZTXY1qT1QNPZEShS2+uADER6CG3vXnX7s+ZdyurCZVf5rw0ClBoqJMrTfbC57k)
     port: ENC(NRbbtdxTdn0ThS/z2EFDg/ZAxEh6LhlQU4IIfk0SNBzaLXTwgfwVFcS7hYNnVYUF)
     password: ENC(15pHOBVxjG2BBPYib/rNlfnl4VdnX21VAsdNq3VcFs18o3cjdPSFyrJ5aBsSL+ua)
-
-
 
   cache:
     # ehcache2.x
@@ -43,7 +49,38 @@ spring:
     # ehcache3.x
   application:
     name: eshop-cache
+  # Kafka 配置项，对应 KafkaProperties 配置类
+  kafka:
+    bootstrap-servers: # 指定 Kafka Broker 地址，可以设置多个，以逗号分隔
+      - ENC(WeoOyqTJqflyfSL+wCSVk/1pM1ITtiaJpoDndP41SQx6/JrGsI701is05dCT6n9mXHPCcBdpKGb52F/sIq1eog==)
+      - ENC(TGUdXIUanGa/2M0WNCzEglDRK/wrVyNXpNtP+AwNCwVSVLE1DIyGOnFtclWD3Odhzc/zFwDEJNaHr/7xCwZq0Q==)
+      - ENC(lv4l1ps3AKUfDSf7jZZG9AMcj1WQg0773aQPckzFeAne1HkHjRG/XT3rU2wzB04NmBdO36b3UsyhaAWTqmMVVg==)
+    # Kafka Producer 配置项
+    producer:
+      acks: 1 # 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。
+      retries: 3 # 发送失败时，重试发送的次数
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # 消息的 key 的序列化
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # 消息的 value 的序列化
+    # Kafka Consumer 配置项
+    consumer:
+      auto-offset-reset: earliest # 设置消费者分组最初的消费进度为 earliest 。可参考博客 https://blog.csdn.net/lishuangzhe7047/article/details/74530417 理解
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      enable-auto-commit: true
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.liukai.eshop.cache.kafka.message
+    # Kafka Consumer Listener 监听器配置
+    listener:
+      missing-topics-fatal: false # 消费监听接口监听的主题不存在时，默认会报错。所以通过设置为 false ，解决报错
 
 #    jcache:
 #      config: classpath:ehcache.xml
 
+# kafka
+app:
+  topics:
+    product: topic-cache-product
+    shop: topic-cache-shop

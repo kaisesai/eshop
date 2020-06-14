@@ -1,21 +1,31 @@
 package com.liukai.eshop.model.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 商品信息
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Accessors(chain = true)
 public class ProductInfo extends Common {
-
-  private Long id;
 
   private String name;
 
-  private String desc;
+  private Long price;
+
+  private String pictureList;
+
+  private String specification;
+
+  private String service;
+
+  private String color;
+
+  private String size;
+
+  private Long shopId;
 
 }

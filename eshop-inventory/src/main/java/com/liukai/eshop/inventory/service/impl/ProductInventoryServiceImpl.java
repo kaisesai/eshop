@@ -3,9 +3,9 @@ package com.liukai.eshop.inventory.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liukai.eshop.common.util.JsonUtils;
+import com.liukai.eshop.common.util.RedisUtils;
 import com.liukai.eshop.inventory.mapper.ProductInventoryMapper;
 import com.liukai.eshop.inventory.service.ProductInventoryService2;
-import com.liukai.eshop.inventory.util.RedisUtils;
 import com.liukai.eshop.model.entity.ProductInventory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class ProductInventoryServiceImpl
       .generatorValueKey(REDIS_CACHE_PREFIX_KEY_PRODUCT_INVENTORY, productInventory.getProductId());
     String jsonString = JsonUtils.writeValueAsString(productInventory);
     stringRedisTemplate.opsForValue().set(key, jsonString);
-    log.info("delete product_inventory cache key:{}", key);
+    log.info("setCache product_inventory cache key:{}", key);
   }
 
 }

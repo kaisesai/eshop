@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+// @Builder
 public class ProductInventory extends Common{
 
   /**
@@ -32,7 +32,7 @@ public class ProductInventory extends Common{
   /**
    * 主键
    */
-  private Long id;
+  // private Long id;
 
   /**
    * 商品ID
@@ -44,4 +44,10 @@ public class ProductInventory extends Common{
    */
   private Long inventoryCnt;
 
+  public static ProductInventory getDefaultFailInstance(long id, long productId){
+    ProductInventory productInventory = new ProductInventory();
+    productInventory.setId(id);
+    productInventory.setProductId(productId);
+    return productInventory;
+  }
 }

@@ -18,7 +18,7 @@ public class User extends Common {
   /**
    * 主键
    */
-  private Long id;
+  // private Long id;
 
   /**
    * 姓名
