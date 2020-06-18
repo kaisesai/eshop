@@ -9,6 +9,4 @@ public class ShopMessage extends CommonMessage {
 
   private Long shopId;
 
-  private Long productId;
-
 }

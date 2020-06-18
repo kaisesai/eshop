@@ -79,7 +79,6 @@ public class MsgConsumer {
    */
   private void processShopInfoChangeMessage(ShopMessage message) {
     // 提取出商品id
-    Long productId = message.getProductId();
     Long shopId = message.getShopId();
     // 这里也是模拟去数据库获取到了信息
 
@@ -89,7 +88,7 @@ public class MsgConsumer {
     //   + "\"level\": 5, "
     //   + "\"goodCommentRate\":0.99}";
     ShopInfo shopInfo = new ShopInfo();
-    shopInfo.setId(productId);
+    shopInfo.setId(shopId);
     shopInfo.setName("小王的手机店");
     shopInfo.setLevel(5);
     shopInfo.setGoodCommentRate(0.99D);
