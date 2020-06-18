@@ -53,8 +53,8 @@ spring:
   kafka:
     bootstrap-servers: # 指定 Kafka Broker 地址，可以设置多个，以逗号分隔
       - ENC(WeoOyqTJqflyfSL+wCSVk/1pM1ITtiaJpoDndP41SQx6/JrGsI701is05dCT6n9mXHPCcBdpKGb52F/sIq1eog==)
-      - ENC(TGUdXIUanGa/2M0WNCzEglDRK/wrVyNXpNtP+AwNCwVSVLE1DIyGOnFtclWD3Odhzc/zFwDEJNaHr/7xCwZq0Q==)
-      - ENC(lv4l1ps3AKUfDSf7jZZG9AMcj1WQg0773aQPckzFeAne1HkHjRG/XT3rU2wzB04NmBdO36b3UsyhaAWTqmMVVg==)
+#      - ENC(TGUdXIUanGa/2M0WNCzEglDRK/wrVyNXpNtP+AwNCwVSVLE1DIyGOnFtclWD3Odhzc/zFwDEJNaHr/7xCwZq0Q==)
+#      - ENC(lv4l1ps3AKUfDSf7jZZG9AMcj1WQg0773aQPckzFeAne1HkHjRG/XT3rU2wzB04NmBdO36b3UsyhaAWTqmMVVg==)
     # Kafka Producer 配置项
     producer:
       acks: 1 # 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。

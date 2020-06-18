@@ -89,7 +89,7 @@ public class MsgConsumer {
     //   + "\"level\": 5, "
     //   + "\"goodCommentRate\":0.99}";
     ShopInfo shopInfo = new ShopInfo();
-    shopInfo.setId(1L);
+    shopInfo.setId(productId);
     shopInfo.setName("小王的手机店");
     shopInfo.setLevel(5);
     shopInfo.setGoodCommentRate(0.99D);
