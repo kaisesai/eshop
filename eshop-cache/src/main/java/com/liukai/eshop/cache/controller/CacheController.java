@@ -22,6 +22,9 @@ public class CacheController {
   @Autowired
   private MsgProducer msgProducer;
 
+  @Autowired
+  private RebuildCache rebuildCache;
+
   @Value("${app.topics.product}")
   private String productTopic;
 
@@ -71,15 +74,29 @@ public class CacheController {
   @GetMapping(value = "/getProductInfo")
   public ProductInfo getProductInfo(@RequestParam(value = "product_id") Long productId) {
     ProductInfo productInfo = cacheService.getProductInfoFromRedisCache(productId);
-    log.info("从 redis 中获取商品信息");
+    log.info("从 redis 中获取商品信息 productInfo:{}", productInfo);
     if (productInfo == null) {
       productInfo = cacheService.getProductInfoFromLocalCache(productId);
-      log.info("从 ehcache 中获取商品信息");
+      log.info("从 ehcache 中获取商品信息 productInfo:{}", productInfo);
     }
     if (productInfo == null) {
       // 两级缓存中都获取不到数据，那么就需要从数据源重新拉取数据，重建缓存
       // 但是这里暂时不讲
       log.info("缓存重建 商品信息");
+      // 假设这里从数据库中获取了数据
+      productInfo = new ProductInfo();
+      productInfo.setId(productId);
+      productInfo.setName("iphone7手机");
+      productInfo.setPrice(5599L);
+      productInfo.setPictureList("a.jpg,b.jpg");
+      productInfo.setSpecification("iphone7的规格");
+      productInfo.setService("iphone7的售后服务");
+      productInfo.setColor("红色,白色,黑色");
+      productInfo.setSize("5.5");
+      productInfo.setShopId(1L);
+
+      // 这里是阻塞请求，如果队列已满，则会该线程被阻塞，应该用异步线程
+      rebuildCache.put(productInfo);
     }
     return productInfo;
   }

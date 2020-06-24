@@ -25,4 +25,17 @@ dependencies {
 //    implementation 'org.apache.kafka:kafka-streams'
     implementation 'org.springframework.kafka:spring-kafka'
 
+    // https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper
+    implementation("org.apache.zookeeper:zookeeper:3.6.1") {
+        // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+//        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'log4j', module: 'log4j'
+    }
+
+//    implementation 'org.slf4j:slf4j-api:1.7.30'
+//    implementation 'ch.qos.logback:logback-classic:1.2.3'
+//    implementation 'ch.qos.logback:logback-core:1.2.3'
+
+
 }

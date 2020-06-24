@@ -17,6 +17,9 @@ subprojects {
         compileOnly {
             extendsFrom annotationProcessor
         }
+//        all*.exclude group: 'org.slf4j', module: 'log4j-over-slf4j'
+//        all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+//        all*.exclude module: 'spring-boot-starter-logback'
     }
 
     repositories {
