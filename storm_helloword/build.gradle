@@ -1,0 +1,22 @@
+jar {
+    enabled = true
+}
+
+// 重写 bootJar 插件
+bootJar {
+    enabled = false
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://clojars.org/repo" }
+}
+
+dependencies {
+    dependencies {
+//        implementation 'org.apache.storm:storm-core:1.1.0'
+        implementation 'org.apache.storm:storm-core:2.1.0'
+        implementation 'io.dropwizard.metrics:metrics-core:3.2.2'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+    }
+}

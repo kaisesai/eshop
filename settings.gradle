@@ -3,4 +3,5 @@ include 'eshop-inventory'
 include 'eshop-cache'
 include 'eshop-model'
 include 'eshop-common'
+include 'storm_helloword'
 

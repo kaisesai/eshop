@@ -1,7 +1,3 @@
-plugins {
-    id 'java'
-//    id 'maven-publish'
-}
 
 jar {
     enabled = true
