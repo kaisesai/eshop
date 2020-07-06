@@ -16,4 +16,15 @@ dependencies {
 //    implementation 'org.apache.logging.log4j:log4j-to-slf4j:2.13.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation("org.apache.zookeeper:zookeeper:3.6.1") {
+        // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+
+//    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+//    implementation 'org.apache.commons:commons-lang3:3.10'
+
 }

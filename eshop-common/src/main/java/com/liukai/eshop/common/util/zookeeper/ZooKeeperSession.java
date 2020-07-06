@@ -1,7 +1,8 @@
-package com.liukai.eshop.cache.zookeeper;
+package com.liukai.eshop.common.util.zookeeper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -134,6 +135,35 @@ public class ZooKeeperSession {
       e.printStackTrace();
     }
 
+  }
+
+  /**
+   * 将数据写入指定路径
+   *
+   * @param path 路径
+   * @param data 数据
+   */
+  public void setNodeData(String path, String data) {
+    try {
+      // 判断节点是否存在，如果不存在则创建持久存储的节点
+      Stat exists = zooKeeper.exists(path, false);
+      if (exists == null) {
+        zooKeeper.create(path, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+      } else {
+        zooKeeper.setData(path, data.getBytes(), -1);
+      }
+    } catch (KeeperException | InterruptedException e) {
+      log.error("zookeeper 节点数据写入失败，path:{}, data:{}", path, data);
+    }
+  }
+
+  public String getNodeData(String path) {
+    try {
+      return new String(zooKeeper.getData(path, false, new Stat()));
+    } catch (KeeperException | InterruptedException e) {
+      log.error("获取 zookeeper 节点数据异常, path:{}", path);
+    }
+    return null;
   }
 
   @Slf4j

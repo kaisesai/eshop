@@ -1,11 +1,10 @@
 package com.liukai.eshop.cache.controller;
 
 import com.liukai.eshop.cache.service.CacheService;
-import com.liukai.eshop.cache.zookeeper.ZookeeperConstant;
-import com.liukai.eshop.cache.zookeeper.ZookeeperDistributedLockUtil;
+import com.liukai.eshop.common.util.zookeeper.ZookeeperConstant;
+import com.liukai.eshop.common.util.zookeeper.ZookeeperDistributedLockUtil;
 import com.liukai.eshop.model.entity.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.ehcache.util.TimeUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RebuildCache {
 
-  private ArrayBlockingQueue<ProductInfo> blockingQueue = new ArrayBlockingQueue<>(100);
+  private final ArrayBlockingQueue<ProductInfo> blockingQueue = new ArrayBlockingQueue<>(100);
 
-  private CacheService cacheService;
+  private final CacheService cacheService;
 
   public RebuildCache(CacheService cacheService) {
     this.cacheService = cacheService;

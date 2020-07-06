@@ -1,4 +1,4 @@
-package com.liukai.eshop.cache.zookeeper;
+package com.liukai.eshop.common.util.zookeeper;
 
 /**
  * zookeeper 分布式锁工具类

@@ -3,13 +3,13 @@ package com.liukai.eshop.cache.kafka;
 import com.liukai.eshop.cache.kafka.message.ProductMessage;
 import com.liukai.eshop.cache.kafka.message.ShopMessage;
 import com.liukai.eshop.cache.service.CacheService;
-import com.liukai.eshop.cache.zookeeper.ZookeeperConstant;
-import com.liukai.eshop.cache.zookeeper.ZookeeperDistributedLockUtil;
+import com.liukai.eshop.common.util.zookeeper.ZookeeperConstant;
+import com.liukai.eshop.common.util.zookeeper.ZookeeperDistributedLockUtil;
 import com.liukai.eshop.model.entity.ProductInfo;
 import com.liukai.eshop.model.entity.ShopInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.math.RandomUtils;
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -70,7 +70,7 @@ public class MsgConsumer {
     productInfo.setShopId(1L);
 
     // 生成随机数
-    int nextInt = RandomUtils.nextInt(1000);
+    int nextInt = RandomUtils.nextInt(0, 1000);
     Date date = DateUtils.addSeconds(new Date(), -nextInt);
     productInfo.setUpdateTime(date);
 

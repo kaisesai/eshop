@@ -1,0 +1,39 @@
+jar {
+    enabled = true
+}
+
+// 重写 bootJar 插件
+bootJar {
+    enabled = false
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://clojars.org/repo" }
+}
+
+configurations {
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+}
+
+dependencies {
+    dependencies {
+        implementation project (':eshop-common'){
+//            exclude group: 'org.springframework.boot'
+//            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+//            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-test'
+        }
+
+        implementation("org.apache.storm:storm-core:2.1.0") {
+//            exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+        }
+        implementation 'io.dropwizard.metrics:metrics-core:3.2.2'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+        implementation('org.apache.kafka:kafka_2.13:2.5.0')
+        implementation("org.apache.zookeeper:zookeeper:3.6.1") {
+            // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
+            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        }
+        implementation 'com.alibaba:fastjson:1.2.70'
+    }
+}
