@@ -122,6 +122,29 @@ public class ZooKeeperSession {
   }
 
   /**
+   * 获取分布式锁
+   *
+   * @param businessLockPath 业务锁路径
+   * @param businessArg      业务参数
+   * @return 是否获取成功
+   */
+  public boolean acquireFastFairDistributedLock(String businessLockPath, String businessArg) {
+    String path = buildDistributeLockPath(businessLockPath, businessArg);
+    try {
+      // 创建一个临时节点，后面有两个参数，一个是安全策略，一个是临时节点类型
+      // EPHEMERAL: 客户端断开时，该节点自动被删除
+      zooKeeper.create(path, ZookeeperConstant.EMPTY_DATA, ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                       CreateMode.EPHEMERAL);
+      log.info("获取快速失败锁成功 product[id=" + businessArg + "]");
+      return true;
+    } catch (Exception e) {
+      log.info("获取快速失败锁失败，原因：" + e.getMessage());
+      // 如果锁已经被创建
+      return false;
+    }
+  }
+
+  /**
    * 释放分布式锁
    *
    * @param businessLockPath 业务锁路径

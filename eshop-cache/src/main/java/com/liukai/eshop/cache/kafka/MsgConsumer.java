@@ -48,26 +48,7 @@ public class MsgConsumer {
 
     // 模拟查询数商品服务信息
     // 这里写死
-    // String productInfoJSON
-    //   = "{\"productId\": 1, "
-    //   + "\"name\": \"iphone7手机\", "
-    //   + "\"price\": 5599, "
-    //   + "\"pictureList\":\"a.jpg,b.jpg\", "
-    //   + "\"specification\": \"iphone7的规格\", "
-    //   + "\"service\": \"iphone7的售后服务\","
-    //   + " \"color\": \"红色,白色,黑色\","
-    //   + " \"size\": \"5.5\", "
-    //   + "\"shopId\": 1}";
-    ProductInfo productInfo = new ProductInfo();
-    productInfo.setId(productId);
-    productInfo.setName("iphone7手机");
-    productInfo.setPrice(5599L);
-    productInfo.setPictureList("a.jpg,b.jpg");
-    productInfo.setSpecification("iphone7的规格");
-    productInfo.setService("iphone7的售后服务");
-    productInfo.setColor("红色,白色,黑色");
-    productInfo.setSize("5.5");
-    productInfo.setShopId(1L);
+    ProductInfo productInfo = ProductInfo.getDefaultInstance(productId);
 
     // 生成随机数
     int nextInt = RandomUtils.nextInt(0, 1000);

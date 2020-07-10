@@ -28,4 +28,19 @@ public class ProductInfo extends Common {
 
   private Long shopId;
 
+  public static ProductInfo getDefaultInstance(Long productId) {
+    ProductInfo productInfo;
+    productInfo = new ProductInfo();
+    productInfo.setId(productId);
+    productInfo.setName("iphone7手机");
+    productInfo.setPrice(5599L);
+    productInfo.setPictureList("a.jpg,b.jpg");
+    productInfo.setSpecification("iphone7的规格");
+    productInfo.setService("iphone7的售后服务");
+    productInfo.setColor("红色,白色,黑色");
+    productInfo.setSize("5.5");
+    productInfo.setShopId(1L);
+    return productInfo;
+  }
+
 }
