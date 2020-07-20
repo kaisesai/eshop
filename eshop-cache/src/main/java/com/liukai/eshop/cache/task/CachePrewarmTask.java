@@ -55,6 +55,7 @@ public class CachePrewarmTask implements Runnable {
       // 已经预热过了
       if (StringUtils.isNotBlank(taskNodePrewarmState)) {
         zk.releaseDistributedLock(TASK_NODE_LOCK_PATH, taskId);
+        log.info("缓存已经预热过了，zk path: " + TASK_NODE_LOCK_PATH + taskId);
         continue;
       }
 
