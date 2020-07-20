@@ -39,6 +39,17 @@ public class ProductCountBolt extends BaseRichBolt {
   public void prepare(Map<String, Object> topoConf, TopologyContext context,
                       OutputCollector collector) {
 
+    /*
+      本次统计热点数据的 zk 路径有：
+        1. 冷启动任务路径："/hot-product-task-{taskId}"，该路径下存储的数据为，
+          该 taskid 统计的热点商品的 topn 的 productId 数据，用逗号分隔；
+
+        2. 冷启动任务锁："/hot-product-task-list-lock"，该路径为预热操作的分布式锁，因为预热的程序会有多个线程去执行，
+          每个线程执行时需要获取该锁
+
+        3. 冷启动热点数据任务节点路径："/hot-product-task-list"，该路径下存储的数据是，每个任务自己的 taskid，用逗号分割。
+     */
+
     // 初始化分布式锁
     zooKeeperSession = ZooKeeperSession.getInstance();
     // 初始化任务 id

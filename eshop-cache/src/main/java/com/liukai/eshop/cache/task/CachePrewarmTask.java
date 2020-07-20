@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,9 +26,8 @@ public class CachePrewarmTask implements Runnable {
 
   @Override
   public void run() {
-    // 1. 获取 task id 列表
     ZooKeeperSession zk = ZooKeeperSession.getInstance();
-    //
+    // 1. 获取 task id 列表
     String taskListNodeData = zk.getNodeData(ZookeeperConstant.STORM_TASK_LIST_NODE);
     if (StringUtils.isBlank(taskListNodeData)) {
       log.warn("task list is empty!");
@@ -37,8 +37,8 @@ public class CachePrewarmTask implements Runnable {
     WebApplicationContext context = SpringContextUtil.getWebApplicationContext();
     CacheService cacheService = context.getBean(CacheService.class);
 
-    List<String> taskIds = Arrays.stream(StringUtils.split(taskListNodeData, ",")).distinct()
-                                 .collect(Collectors.toList());
+    Set<String> taskIds = Arrays.stream(StringUtils.split(taskListNodeData, ",")).distinct()
+                                .collect(Collectors.toSet());
     for (String taskId : taskIds) {
       // 获取 task id 路径下的锁
 
