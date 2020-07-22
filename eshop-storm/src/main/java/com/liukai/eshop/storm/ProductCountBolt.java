@@ -236,6 +236,7 @@ public class ProductCountBolt extends BaseRichBolt {
             // 发送到分发层
             String cancelHotUrl = String.format(CANCEL_HOT_URL, lastTimeHotPid);
             HttpUtils.get(cancelHotUrl);
+            log.info("热点商品消失了，product_id：" + lastTimeHotPid);
           }
         }
 
@@ -263,8 +264,8 @@ public class ProductCountBolt extends BaseRichBolt {
 
       // String response = HttpUtils.get(cacheServiceGetProductInfoUrl);
       // 直接写死数据
-      String response
-        = "{\"status\":0,\"desc\":\"成功\",\"data\":{\"id\":1,\"create_time\":null,\"update_time\":null,\"name\":\"iphone7手机\",\"price\":5599,\"picture_list\":\"a.jpg,b.jpg\",\"specification\":\"iphone7的规格\",\"service\":\"iphone7的售后服务\",\"color\":\"红色,白色,黑色\",\"size\":\"5.5\",\"shop_id\":1}}";
+      String response = "{\"status\":0,\"desc\":\"成功\",\"data\":{\"id\":" + productId
+        + ",\"create_time\":null,\"update_time\":null,\"name\":\"iphone7手机\",\"price\":5599,\"picture_list\":\"a.jpg,b.jpg\",\"specification\":\"iphone7的规格\",\"service\":\"iphone7的售后服务\",\"color\":\"红色,白色,黑色\",\"size\":\"5.5\",\"shop_id\":1}}";
 
       // 商品信息
       String productInfoData;

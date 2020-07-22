@@ -44,14 +44,14 @@ public class HttpUtils {
 
       CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
       String response = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-      log.info("[HttpUtils get]\t[url: {}, response: {}]", requestUrl, response);
+      log.info("[HttpUtils get success]\t[url: {}, response: {}]", requestUrl, response);
       return response;
     } catch (Exception e) {
       log.error(String.format("[HttpUtils get fail]\t[url: %s]", requestUrl), e);
       throw new RuntimeException(e);
     } finally {
       HttpClientUtils.closeQuietly(httpClient);
-      log.info("[HttpUtils get]\t[url: {}, params: {}]", url, params);
+      log.info("[HttpUtils get finish]\t[url: {}, params: {}]", url, params);
     }
   }
 
