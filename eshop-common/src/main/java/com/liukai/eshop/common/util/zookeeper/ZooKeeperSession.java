@@ -98,9 +98,9 @@ public class ZooKeeperSession {
       // EPHEMERAL: 客户端断开时，该节点自动被删除
       zooKeeper.create(path, ZookeeperConstant.EMPTY_DATA, ZooDefs.Ids.OPEN_ACL_UNSAFE,
                        CreateMode.EPHEMERAL);
-      log.info("获取锁成功 product[id=" + businessArg + "]");
+      log.info("获取锁成功，path: {}", path);
     } catch (Exception e) {
-      log.info("获取锁失败，原因：" + e.getMessage());
+      log.info("获取锁失败，path: {}，原因: {}", path, e.getMessage());
       // 如果锁已经被创建，那么将抛出异常
       // 循环等待锁的释放
       int count = 0;
@@ -135,10 +135,10 @@ public class ZooKeeperSession {
       // EPHEMERAL: 客户端断开时，该节点自动被删除
       zooKeeper.create(path, ZookeeperConstant.EMPTY_DATA, ZooDefs.Ids.OPEN_ACL_UNSAFE,
                        CreateMode.EPHEMERAL);
-      log.info("获取快速失败锁成功 product[id=" + businessArg + "]");
+      log.info("获取快速失败锁【成功】，path: {}", path);
       return true;
     } catch (Exception e) {
-      log.info("获取快速失败锁失败，原因：" + e.getMessage());
+      log.info("获取快速失败锁【失败】，path: {}，errorMsg: {}", path, e.getMessage());
       // 如果锁已经被创建
       return false;
     }
@@ -176,7 +176,7 @@ public class ZooKeeperSession {
         zooKeeper.setData(path, data.getBytes(), -1);
       }
     } catch (KeeperException | InterruptedException e) {
-      log.error("zookeeper 节点数据写入失败，path:{}, data:{}", path, data);
+      log.error("zookeeper 节点数据写入失败，path: {}，data: {}，errorMsg: {}", path, data, e.getMessage());
     }
   }
 
@@ -184,7 +184,7 @@ public class ZooKeeperSession {
     try {
       return new String(zooKeeper.getData(path, false, new Stat()));
     } catch (KeeperException | InterruptedException e) {
-      log.error("获取 zookeeper 节点数据异常, path:{}", path);
+      log.error("获取 zookeeper 节点数据异常, path:{}, errorMsg: {}", path, e.getMessage());
     }
     return null;
   }

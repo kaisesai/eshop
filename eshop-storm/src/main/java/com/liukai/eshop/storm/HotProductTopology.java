@@ -19,10 +19,11 @@ public class HotProductTopology {
     builder.setSpout(AccessLogConsumerSpout.class.getSimpleName(), new AccessLogConsumerSpout(), 2);
     // 设置 LogParseBolt
     builder.setBolt(LogParseBolt.class.getSimpleName(), new LogParseBolt(), 5).setNumTasks(5)
-      .shuffleGrouping(AccessLogConsumerSpout.class.getSimpleName());
+           .shuffleGrouping(AccessLogConsumerSpout.class.getSimpleName());
     // 设置 ProductCountBolt
     builder.setBolt(ProductCountBolt.class.getSimpleName(), new ProductCountBolt(), 5)
-      .setNumTasks(5).fieldsGrouping(LogParseBolt.class.getSimpleName(), new Fields("productId"));
+           .setNumTasks(5)
+           .fieldsGrouping(LogParseBolt.class.getSimpleName(), new Fields("productId"));
 
     Config config = new Config();
     config.setDebug(false);

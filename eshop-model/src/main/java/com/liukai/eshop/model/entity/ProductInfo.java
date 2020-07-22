@@ -43,4 +43,11 @@ public class ProductInfo extends Common {
     return productInfo;
   }
 
+  @Override
+  public String toString() {
+    return "ProductInfo{" + "name='" + name + '\'' + ", price=" + price + ", pictureList='"
+      + pictureList + '\'' + ", specification='" + specification + '\'' + ", service='" + service
+      + '\'' + ", color='" + color + '\'' + ", size='" + size + '\'' + ", shopId=" + shopId
+      + ", id=" + id + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
+  }
 }
