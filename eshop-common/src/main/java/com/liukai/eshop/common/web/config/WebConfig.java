@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+import javax.servlet.Filter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.TimeZone;
@@ -132,6 +137,16 @@ public class WebConfig extends WebMvcConfigurationSupport {
         break;
       }
     }
+  }
+
+  @Bean
+  public FilterRegistrationBean<Filter> filterFilterRegistrationBean() {
+    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter(
+      StandardCharsets.UTF_8.name(), true, true);
+    FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+    filterRegistrationBean.setFilter(characterEncodingFilter);
+    filterRegistrationBean.addUrlPatterns("/*");
+    return filterRegistrationBean;
   }
 
 }

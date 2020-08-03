@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Component
 public class RequestQueue implements ApplicationRunner {
 
-  private List<ArrayBlockingQueue<Request>> queues = new ArrayList<>();
+  private final List<ArrayBlockingQueue<Request>> queues = new ArrayList<>();
 
   @Override
   public void run(ApplicationArguments args) throws Exception {

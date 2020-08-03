@@ -2,6 +2,7 @@ package com.liukai.eshop.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -61,6 +62,19 @@ public class JsonUtils {
       return OBJECT_MAPPER.readValue(content, valueType);
     } catch (JsonProcessingException e) {
       log.error("read value fail, content:{}, valueType:{}, exception:{}", content, valueType,
+                e.getMessage());
+      return null;
+    }
+  }
+
+  public static <T> T readValue(String content, TypeReference<T> valueTypeRef) {
+    try {
+      if (StringUtils.isEmpty(content)) {
+        return null;
+      }
+      return OBJECT_MAPPER.readValue(content, valueTypeRef);
+    } catch (JsonProcessingException e) {
+      log.error("read value fail, content:{}, valueTypeRef:{}, exception:{}", content, valueTypeRef,
                 e.getMessage());
       return null;
     }

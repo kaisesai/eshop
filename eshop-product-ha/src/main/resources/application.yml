@@ -1,0 +1,28 @@
+server:
+  port: 7000
+  http2:
+    enabled: true
+
+# 日志
+logging:
+  level:
+    root: info
+    com.liukai.eshop: debug
+    # 可以打印 sql
+    com.baomidou.mybatisplus: debug
+#    org:
+#      springframework:
+#        kafka: ERROR # spring-kafka INFO 日志太多了，所以我们限制只打印 ERROR 级别
+#      apache:
+#        kafka: ERROR # kafka INFO 日志太多了，所以我们限制只打印 ERROR 级别
+# 数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://127.0.0.1:3306/eshop?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: ENC(xnRSJ7Zx4n4rqFx4yZGnOz738Cl63YwpqWuIAtgbYlapj6GbbjuSKHVEVcGNqgac/bmIBwI4Uycg7NQbAb0IcJT6WRXCz4uT7/Z4KnVl4WAVv+t1wFZzCYAVMeUnWv4UAByixYAIdGLBrqaUe6rWV04QQ4Q0oi8rvlIWt/pdCoNw46iB/5F/bDk4EOCXEN/j)
+    username: ENC(6IBWzB+q+qamnZey0dQRS1StZ3qIKV+1/f8k9m4dSeSv3woXRTMlAnEGxFIaR5zz)
+    password: ENC(Oe20yK7y64jgEn9Ms+vXTW+rZCuk6DK1SuVJfHcMXGqm5z1n5VqI3A0+jhFLruV5)
+
+  application:
+    name: eshop-cache-ha

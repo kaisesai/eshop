@@ -12,21 +12,16 @@ bootJar {
 }
 
 dependencies {
-//    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
-//    implementation 'org.apache.logging.log4j:log4j-to-slf4j:2.13.2'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
     implementation("org.apache.zookeeper:zookeeper:3.6.1") {
         // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-
     // Apache 的网络工具包
     implementation 'org.apache.httpcomponents:httpclient:4.5.12'
-
     implementation 'org.apache.commons:commons-collections4:4.4'
-
     implementation 'org.apache.commons:commons-lang3:3.10'
-
+    // hystrix
+//    implementation 'com.netflix.hystrix:hystrix-core:1.5.18'
+//    compile 'com.netflix.hystrix:hystrix-core:1.5.18'
 }

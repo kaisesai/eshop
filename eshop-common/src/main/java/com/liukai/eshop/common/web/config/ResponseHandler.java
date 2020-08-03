@@ -22,12 +22,10 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
   @Override
   public boolean supports(MethodParameter returnType,
                           Class<? extends HttpMessageConverter<?>> converterType) {
-    // if(converterType.isAssignableFrom(MappingJackson2HttpMessageConverter.class)){
-    //   return true;
-    // }else{
-    //   return false;
-    // }
-    return true;
+    // 接口返回值所在方法、类上标记有 @CommonApiResult 注解
+    return returnType.hasMethodAnnotation(CommonApiResult.class) || returnType.getDeclaringClass()
+                                                                              .isAnnotationPresent(
+                                                                                CommonApiResult.class);
   }
 
   @Override

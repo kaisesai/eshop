@@ -32,16 +32,16 @@ public class ExceptionHandle {
     //   return ReturnMessageUtil.error(-1, "未知异常"+exception.getMessage());
     // }
     log.error("系统异常", exception);
-    return Result.fail(ResultCode.SYSTEM_ERROR);
+    return Result.fail(ResultCode.SYSTEM_ERROR, exception.getMessage());
   }
 
   @ExceptionHandler({IllegalArgumentException.class, MissingServletRequestParameterException.class,
-                      TypeMismatchException.class, HttpRequestMethodNotSupportedException.class})
+    TypeMismatchException.class, HttpRequestMethodNotSupportedException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Result handleBadRequestException(Exception ex, HttpServletRequest request) {
-    log.error("参数异常", ex);
-    return Result.fail(ResultCode.PARAM_IS_INVALID);
-    // return ApiResp.error(new Status(Error.ErrorCode.INVALID_PARAMETER, ex.getMessage()));
+  public Result handleBadRequestException(Exception exception, HttpServletRequest request) {
+    log.error("参数异常", exception);
+    return Result.fail(ResultCode.PARAM_IS_INVALID, exception.getMessage());
+    // return ApiResp.error(new Status(Error.ErrorCode.INVALID_PARAMETER, exception.getMessage()));
   }
 
 }

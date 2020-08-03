@@ -3,48 +3,58 @@ package com.liukai.eshop.common.web.model;
 import lombok.Data;
 
 /**
- * 通用相应 model
+ * 通用响应 model
  *
  * @author liukai
  */
 @Data
-public class Result {
+public class Result<T> {
 
   private Integer status;
 
-  private String desc;
+  private String statusDesc;
 
-  private Object data;
+  private String errorMsg;
 
-  public static Result succ() {
-    Result result = new Result();
+  private T data;
+
+  public static Result<Object> succ() {
+    Result<Object> result = new Result<>();
     result.setResultCode(ResultCode.SUCCESS);
     return result;
   }
 
-  public static Result succ(Object data) {
-    Result result = new Result();
+  public static <T> Result<T> succ(T data) {
+    Result<T> result = new Result<>();
     result.setResultCode(ResultCode.SUCCESS);
     result.setData(data);
     return result;
   }
 
-  public static Result fail(Integer status, String desc) {
-    Result result = new Result();
+  public static Result<Object> fail(Integer status, String desc, String errorMsg) {
+    Result<Object> result = new Result<>();
     result.setStatus(status);
-    result.setDesc(desc);
+    result.setStatusDesc(desc);
+    result.setErrorMsg(errorMsg);
     return result;
   }
 
-  public static Result fail(ResultCode resultCode) {
-    Result result = new Result();
+  public static Result<Object> fail(ResultCode resultCode) {
+    Result<Object> result = new Result<>();
     result.setResultCode(resultCode);
+    return result;
+  }
+
+  public static Result<Object> fail(ResultCode resultCode, String errorMsg) {
+    Result<Object> result = new Result<>();
+    result.setResultCode(resultCode);
+    result.setErrorMsg(errorMsg);
     return result;
   }
 
   private void setResultCode(ResultCode resultCode) {
     this.status = resultCode.status();
-    this.desc = resultCode.message();
+    this.statusDesc = resultCode.message();
   }
 
 }

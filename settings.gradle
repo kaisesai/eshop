@@ -5,4 +5,6 @@ include 'eshop-model'
 include 'eshop-common'
 include 'storm_helloword'
 include 'eshop-storm'
+include 'eshop-cache-ha'
+include 'eshop-product-ha'
 
