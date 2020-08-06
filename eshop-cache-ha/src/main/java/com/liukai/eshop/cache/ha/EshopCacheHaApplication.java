@@ -1,10 +1,12 @@
 package com.liukai.eshop.cache.ha;
 
+import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -17,6 +19,19 @@ public class EshopCacheHaApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(EshopCacheHaApplication.class, args);
+  }
+
+  /**
+   * hystrix 指标监控流 servlet
+   *
+   * @return
+   */
+  @Bean
+  public ServletRegistrationBean<HystrixMetricsStreamServlet> indexServletRegistration() {
+    ServletRegistrationBean<HystrixMetricsStreamServlet> registration
+      = new ServletRegistrationBean<>(new HystrixMetricsStreamServlet());
+    registration.addUrlMappings("/hystrix.stream");
+    return registration;
   }
 
   /**

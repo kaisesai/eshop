@@ -1,10 +1,8 @@
 package com.liukai.cache.ha.test;
 
 import com.liukai.eshop.cache.ha.collapser.CommandCollapserGetValueForKey;
-import com.liukai.eshop.cache.ha.command.CommandCircuit;
-import com.liukai.eshop.cache.ha.command.CommandLimit;
-import com.liukai.eshop.cache.ha.command.CommandThatFailsFast;
-import com.liukai.eshop.cache.ha.command.CommandUsingRequestCache;
+import com.liukai.eshop.cache.ha.command.*;
+import com.netflix.config.ConfigurationManager;
 import com.netflix.hystrix.HystrixInvokableInfo;
 import com.netflix.hystrix.HystrixRequestLog;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
@@ -12,17 +10,125 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Observable;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.concurrent.*;
+import java.util.stream.IntStream;
 
 public class CommandTest {
 
   private final Logger log = LoggerFactory.getLogger(CommandTest.class);
+
+  @Test
+  public void test4() throws InterruptedException, ExecutionException {
+    // 线程池中最大允许的任务数量 = 线程池最大线程数 + 队列等待数量
+    BlockingQueue queue;
+    queue = new SynchronousQueue(); // 1
+    // queue = new LinkedBlockingDeque<>(20);  // 2
+    ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 50, 60, TimeUnit.SECONDS,
+                                                                   queue);
+
+    int threadNum = 71;
+    CountDownLatch c = new CountDownLatch(threadNum);
+    IntStream.range(0, threadNum).parallel().mapToObj(item -> (Runnable) () -> {
+      System.out.println(Thread.currentThread().getName());
+      try {
+        TimeUnit.SECONDS.sleep(2);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      c.countDown();
+
+    }).forEach(threadPoolExecutor::submit);
+    c.await();
+  }
+
+  @Test
+  public void testPrimary() {
+    HystrixRequestContext context = HystrixRequestContext.initializeContext();
+    try {
+      ConfigurationManager.getConfigInstance().setProperty("primarySecondary.usePrimary", true);
+      Assert.assertEquals("responseFromPrimary-20",
+                          new CommandFacadeWithPrimarySecondary(20).execute());
+      // 切换为使用备用
+      ConfigurationManager.getConfigInstance().setProperty("primarySecondary.usePrimary", false);
+      Assert.assertEquals("responseFromSecondary-20",
+                          new CommandFacadeWithPrimarySecondary(20).execute());
+    } finally {
+      context.shutdown();
+      ConfigurationManager.getConfigInstance().clear();
+    }
+  }
+
+  @Test
+  public void testSecondary() {
+    HystrixRequestContext context = HystrixRequestContext.initializeContext();
+    try {
+      ConfigurationManager.getConfigInstance().setProperty("primarySecondary.usePrimary", false);
+      Assert.assertEquals("responseFromSecondary-20",
+                          new CommandFacadeWithPrimarySecondary(20).execute());
+    } finally {
+      context.shutdown();
+      ConfigurationManager.getConfigInstance().clear();
+    }
+  }
+
+  @Test
+  public void testGetProductMultipleFallbackCommand() {
+    try (HystrixRequestContext ignored = HystrixRequestContext.initializeContext()) {
+      GetProductMultipleFallbackCommand command = new GetProductMultipleFallbackCommand(2L);
+      command.execute();
+    }
+  }
+
+  @Test
+  public void testMultiFallback() {
+    CommandWithFallbackViaNetwork command = new CommandWithFallbackViaNetwork(1);
+    String result = command.execute();
+    log.info("执行结果：{}", result);
+  }
+
+  @Test
+  public void testBatchResultFailsFastCommand() {
+    BatchResultFailsFastCommand command = new BatchResultFailsFastCommand();
+    Observable<Integer> observe = command.observe();
+    Iterator<Integer> iterator = observe.toBlocking().getIterator();
+    while (iterator.hasNext()) {
+      System.out.println("BatchResultFailsFastCommand on consumer: " + iterator.next());
+    }
+  }
+
+  @Test
+  public void testObserverCommondStubbedFallback() {
+
+    ObservableCommandWithStubbedFallback command = new ObservableCommandWithStubbedFallback(1,
+                                                                                            "CN");
+
+    // 懒汉式
+    Observable<CommandWithStubbedFallback.UserAccount> userAccountObservable = command
+      .toObservable();
+
+    userAccountObservable.subscribe(userAccount -> {
+      System.out.println("懒汉式观察者，监听到对象：" + userAccount);
+    });
+
+    // // 饿汉式
+    // Observable<CommandWithStubbedFallback.UserAccount> observe = command.observe();
+    // observe.subscribe(userAccount -> {
+    //   System.out.println("饿汉式观察者，监听到对象：" + userAccount);
+    // });
+
+  }
+
+  @Test
+  public void testStubbedFallback() {
+    CommandWithStubbedFallback command = new CommandWithStubbedFallback(1, "CN");
+    CommandWithStubbedFallback.UserAccount execute = command.execute();
+    System.out.println(execute);
+  }
 
   @Test
   public void testCollapser() throws ExecutionException, InterruptedException {

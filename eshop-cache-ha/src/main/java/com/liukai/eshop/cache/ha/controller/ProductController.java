@@ -3,6 +3,7 @@ package com.liukai.eshop.cache.ha.controller;
 import com.liukai.eshop.cache.ha.collapser.CollapserGetProductCommand;
 import com.liukai.eshop.cache.ha.command.GetCityCommand;
 import com.liukai.eshop.cache.ha.command.GetProductCommand;
+import com.liukai.eshop.cache.ha.command.GetProductMultipleFallbackCommand;
 import com.liukai.eshop.cache.ha.command.GetProductsCommand;
 import com.liukai.eshop.model.entity.ProductInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,15 @@ import java.util.stream.Collectors;
 @RestController
 public class ProductController {
 
+  @GetMapping(value = "/getformultiplefallback")
+  public ProductInfo getForMultipleFallback(@RequestParam(value = "product_id") Long productId) {
+    GetProductMultipleFallbackCommand command = new GetProductMultipleFallbackCommand(productId);
+    return command.execute();
+  }
+
   @GetMapping(value = "/get")
   public ProductInfo getProductInfo(@RequestParam(value = "product_id") Long productId) {
     GetProductCommand getProductCommand = new GetProductCommand(productId);
-    // 同步执行
     return getProductCommand.execute();
   }
 
