@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 请求处理任务
+ * 请求处理任务，用于处理缓存、数据库双写一致性问题的解决方案
  */
 @Slf4j
 public class RequestProcessorTask implements Callable<Boolean> {
@@ -19,7 +19,7 @@ public class RequestProcessorTask implements Callable<Boolean> {
   /**
    * key 为商品 id，value 为 true，有更新操作
    */
-  private Map<Long, Boolean> flagMap = new ConcurrentHashMap<>();
+  private final Map<Long, Boolean> flagMap = new ConcurrentHashMap<>();
 
   public RequestProcessorTask(ArrayBlockingQueue<Request> queue) {
     this.queue = queue;
@@ -44,7 +44,7 @@ public class RequestProcessorTask implements Callable<Boolean> {
             flagMap.put(request.getProductId(), true);
             log.info("写请求：{}", requestStr);
           } else if (request instanceof ProductInventoryCacheRefreshRequest) {
-            // 缓存刷新请求
+            // 更新缓存的请求
             log.info("读请求：{}", requestStr);
             Boolean flag = flagMap.get(request.getProductId());
             if (flag == null) {

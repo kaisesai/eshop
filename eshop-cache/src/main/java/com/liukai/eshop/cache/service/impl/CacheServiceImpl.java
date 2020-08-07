@@ -1,8 +1,11 @@
 package com.liukai.eshop.cache.service.impl;
 
+import com.liukai.eshop.cache.command.GetProductInfoFromRedisCacheCommand;
+import com.liukai.eshop.cache.command.GetShopInfoFromRedisCacheCommand;
+import com.liukai.eshop.cache.command.SaveProductInfo2RedisCommand;
+import com.liukai.eshop.cache.command.SaveShopInfo2RedisCacheCommand;
+import com.liukai.eshop.cache.constant.CacheConstant;
 import com.liukai.eshop.cache.service.CacheService;
-import com.liukai.eshop.common.util.JsonUtils;
-import com.liukai.eshop.common.util.RedisUtils;
 import com.liukai.eshop.model.entity.ProductInfo;
 import com.liukai.eshop.model.entity.ShopInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CacheServiceImpl implements CacheService {
 
-  public static final String CACHE_NAME = "local";
+  // public static final String CACHE_NAME = "local";
 
-  public static final String REDIS_KEY_PREFIX_PRODUCT_INFO = "product_info_";
+  // public static final String REDIS_KEY_PREFIX_PRODUCT_INFO = "product_info_";
 
-  public static final String REDIS_KEY_PREFIX_SHOP_INFO = "shop_info_";
+  // public static final String REDIS_KEY_PREFIX_SHOP_INFO = "shop_info_";
 
   @Autowired
   private StringRedisTemplate stringRedisTemplate;
@@ -29,7 +32,7 @@ public class CacheServiceImpl implements CacheService {
    * @return
    */
   @Override
-  @CachePut(value = CACHE_NAME, key = "'key_'+#productInfo.getId()")
+  @CachePut(value = CacheConstant.CACHE_NAME, key = "'key_'+#productInfo.getId()")
   public ProductInfo saveLocalCache(ProductInfo productInfo) {
     return productInfo;
   }
@@ -38,7 +41,7 @@ public class CacheServiceImpl implements CacheService {
    * 从本地缓存中获取商品信息
    */
   @Override
-  @Cacheable(value = CACHE_NAME, key = "'key_'+#id")
+  @Cacheable(value = CacheConstant.CACHE_NAME, key = "'key_'+#id")
   public ProductInfo getLocalCache(Long id) {
     return null;
   }
@@ -49,7 +52,7 @@ public class CacheServiceImpl implements CacheService {
    * @return
    */
   @Override
-  @CachePut(value = CACHE_NAME, key = "'product_info_'+#productInfo.getId()")
+  @CachePut(value = CacheConstant.CACHE_NAME, key = "'product_info_'+#productInfo.getId()")
   public ProductInfo saveProductInfo2LocalCache(ProductInfo productInfo) {
     return productInfo;
   }
@@ -58,7 +61,7 @@ public class CacheServiceImpl implements CacheService {
    * 从本地ehcache缓存中获取商品信息
    */
   @Override
-  @Cacheable(value = CACHE_NAME, key = "'product_info_'+#productId")
+  @Cacheable(value = CacheConstant.CACHE_NAME, key = "'product_info_'+#productId")
   public ProductInfo getProductInfoFromLocalCache(Long productId) {
     return null;
   }
@@ -67,7 +70,7 @@ public class CacheServiceImpl implements CacheService {
    * 将店铺信息保存到本地的ehcache缓存中
    */
   @Override
-  @CachePut(value = CACHE_NAME, key = "'shop_info_'+#shopInfo.getId()")
+  @CachePut(value = CacheConstant.CACHE_NAME, key = "'shop_info_'+#shopInfo.getId()")
   public ShopInfo saveShopInfo2LocalCache(ShopInfo shopInfo) {
     return shopInfo;
   }
@@ -76,35 +79,35 @@ public class CacheServiceImpl implements CacheService {
    * 从本地ehcache缓存中获取店铺信息
    */
   @Override
-  @Cacheable(value = CACHE_NAME, key = "'shop_info_'+#shopId")
+  @Cacheable(value = CacheConstant.CACHE_NAME, key = "'shop_info_'+#shopId")
   public ShopInfo getShopInfoFromLocalCache(Long shopId) {
     return null;
   }
 
   @Override
   public void saveProductInfo2RedisCache(ProductInfo productInfo) {
-    String key = RedisUtils.generatorValueKey(REDIS_KEY_PREFIX_PRODUCT_INFO, productInfo.getId());
-    stringRedisTemplate.opsForValue().set(key, JsonUtils.writeValueAsString(productInfo));
+    SaveProductInfo2RedisCommand command = new SaveProductInfo2RedisCommand(productInfo,
+                                                                            stringRedisTemplate);
+    command.execute();
   }
 
   @Override
   public ProductInfo getProductInfoFromRedisCache(Long productId) {
-    String key = RedisUtils.generatorValueKey(REDIS_KEY_PREFIX_PRODUCT_INFO, productId);
-    String jsonStr = stringRedisTemplate.opsForValue().get(key);
-    return JsonUtils.readValue(jsonStr, ProductInfo.class);
+    return new GetProductInfoFromRedisCacheCommand(productId, stringRedisTemplate).execute();
   }
 
   @Override
   public void saveShopInfo2RedisCache(ShopInfo shopInfo) {
-    String key = RedisUtils.generatorValueKey(REDIS_KEY_PREFIX_SHOP_INFO, shopInfo.getId());
-    stringRedisTemplate.opsForValue().set(key, JsonUtils.writeValueAsString(shopInfo));
+    SaveShopInfo2RedisCacheCommand command = new SaveShopInfo2RedisCacheCommand(shopInfo,
+                                                                                stringRedisTemplate);
+    command.execute();
   }
 
   @Override
   public ShopInfo getShopInfoFromRedisCache(Long shopId) {
-    String key = RedisUtils.generatorValueKey(REDIS_KEY_PREFIX_SHOP_INFO, shopId);
-    String jsonStr = stringRedisTemplate.opsForValue().get(key);
-    return JsonUtils.readValue(jsonStr, ShopInfo.class);
+    GetShopInfoFromRedisCacheCommand command = new GetShopInfoFromRedisCacheCommand(shopId,
+                                                                                    stringRedisTemplate);
+    return command.execute();
   }
 
 }

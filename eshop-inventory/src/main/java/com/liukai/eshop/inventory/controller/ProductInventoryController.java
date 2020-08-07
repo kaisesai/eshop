@@ -58,7 +58,7 @@ public class ProductInventoryController {
   public ProductInventory getProductInventory(@RequestParam(value = "product_id") Long productId) {
 
     try {
-      // 刷新缓存操作
+      // 更新缓存请求
       ProductInventoryCacheRefreshRequest request = new ProductInventoryCacheRefreshRequest(
         productId, productInventoryService);
 
