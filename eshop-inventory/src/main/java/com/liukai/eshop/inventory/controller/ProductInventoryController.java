@@ -52,6 +52,8 @@ public class ProductInventoryController {
 
   /**
    * 查询商品库存信息
+   * <p>
+   * 数据双写一致性保障方案
    *
    * @param productId
    * @return
