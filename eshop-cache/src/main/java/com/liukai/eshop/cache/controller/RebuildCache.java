@@ -52,6 +52,7 @@ public class RebuildCache {
         try {
           ProductInfo productInfo = blockingQueue.take();
           Long productId = productInfo.getId();
+          // 获取分布式锁
           ZookeeperDistributedLockUtil
             .acquireDistributedLock(ZookeeperConstant.DISTRIBUTE_LOCAL_OF_PRODUCT_PATH,
                                     String.valueOf(productId));

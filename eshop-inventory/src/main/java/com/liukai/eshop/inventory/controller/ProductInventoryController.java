@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * (ProductInventory)表控制层
+ * <p>
+ * 解决缓存与数据一致性的问题
  *
  * @author liukai
  * @since 2020-06-03 21:37:55

@@ -1,0 +1,11 @@
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    implementation project(':eshop-model')
+    implementation project(':eshop-common')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+//    runtimeOnly 'mysql:mysql-connector-java'
+//    implementation 'com.baomidou:mybatis-plus-boot-starter:3.3.2'
+
+}

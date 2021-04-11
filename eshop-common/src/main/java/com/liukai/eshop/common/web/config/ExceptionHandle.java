@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionHandle {
 
   @ExceptionHandler(value = Exception.class)
-  public Result handle(Exception exception) {
+  public Result<Object> handle(Exception exception) {
     // if(exception instanceof SbException) {
     //   SbException sbexception = (SbException)exception;
     //   return ReturnMessageUtil.error(sbexception.getCode(), sbexception.getMessage());
@@ -34,11 +34,11 @@ public class ExceptionHandle {
     log.error("系统异常", exception);
     return Result.fail(ResultCode.SYSTEM_ERROR, exception.getMessage());
   }
-
+  
   @ExceptionHandler({IllegalArgumentException.class, MissingServletRequestParameterException.class,
-    TypeMismatchException.class, HttpRequestMethodNotSupportedException.class})
+                      TypeMismatchException.class, HttpRequestMethodNotSupportedException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Result handleBadRequestException(Exception exception, HttpServletRequest request) {
+  public Result<Object> handleBadRequestException(Exception exception, HttpServletRequest request) {
     log.error("参数异常", exception);
     return Result.fail(ResultCode.PARAM_IS_INVALID, exception.getMessage());
     // return ApiResp.error(new Status(Error.ErrorCode.INVALID_PARAMETER, exception.getMessage()));

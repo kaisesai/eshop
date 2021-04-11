@@ -3,6 +3,16 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
 }
 
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
 subprojects {
 
     apply plugin: 'java'
@@ -22,9 +32,9 @@ subprojects {
 //        all*.exclude module: 'spring-boot-starter-logback'
     }
 
-    repositories {
-        mavenCentral()
-    }
+    // repositories {
+    //     mavenCentral()
+    // }
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'

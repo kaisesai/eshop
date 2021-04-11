@@ -68,11 +68,12 @@ public class CacheController {
   }
 
   /**
+   * 解决高并发情况下的缓存重建的问题
+   * <p>
    * 这里的代码别看着奇怪，简单回顾下之前的流程：
    * 1. 获取 redis 缓存
    * 2. 获取不到再获取服务的堆缓存（也就是这里的 ehcache）
-   * 3.
-   * 还获取不到就需要去数据库获取并重建缓存
+   * 3. 还获取不到就需要去数据库获取并重建缓存
    */
   @GetMapping(value = "/getProductInfoAndRebuild")
   public ProductInfo getProductInfo(@RequestParam(value = "product_id") Long productId) {
