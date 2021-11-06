@@ -1,7 +1,7 @@
-package com.liukai.eshop.common.web.config;
+package com.liukai.eshop.common.config.web;
 
-import com.liukai.eshop.common.web.model.Result;
-import com.liukai.eshop.common.web.model.ResultCode;
+import com.liukai.eshop.common.model.Result;
+import com.liukai.eshop.common.model.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandle {
-
+  
   @ExceptionHandler(value = Exception.class)
-  public Result<Object> handle(Exception exception) {
+  public Result<Object> handle(Exception e) {
     // if(exception instanceof SbException) {
     //   SbException sbexception = (SbException)exception;
     //   return ReturnMessageUtil.error(sbexception.getCode(), sbexception.getMessage());
@@ -31,8 +31,8 @@ public class ExceptionHandle {
     //   logger.error("系统异常 {}",exception);
     //   return ReturnMessageUtil.error(-1, "未知异常"+exception.getMessage());
     // }
-    log.error("系统异常", exception);
-    return Result.fail(ResultCode.SYSTEM_ERROR, exception.getMessage());
+    log.error("系统异常:{}", e.getMessage(), e);
+    return Result.fail(ResultCode.SYSTEM_ERROR, e.getMessage());
   }
   
   @ExceptionHandler({IllegalArgumentException.class, MissingServletRequestParameterException.class,

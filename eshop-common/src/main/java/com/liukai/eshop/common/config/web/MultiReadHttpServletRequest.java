@@ -1,4 +1,4 @@
-package com.liukai.eshop.common.web.config;
+package com.liukai.eshop.common.config.web;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 

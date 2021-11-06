@@ -8,7 +8,6 @@ import com.liukai.eshop.cache.constant.CacheConstant;
 import com.liukai.eshop.cache.service.CacheService;
 import com.liukai.eshop.model.entity.ProductInfo;
 import com.liukai.eshop.model.entity.ShopInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -23,7 +22,7 @@ public class CacheServiceImpl implements CacheService {
 
   // public static final String REDIS_KEY_PREFIX_SHOP_INFO = "shop_info_";
 
-  @Autowired
+  // @Autowired
   private StringRedisTemplate stringRedisTemplate;
 
   /**

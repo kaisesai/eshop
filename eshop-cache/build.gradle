@@ -7,19 +7,26 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+    // implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
 //    implementation 'com.alibaba:fastjson:1.2.70'
     runtimeOnly 'mysql:mysql-connector-java'
-    implementation 'com.baomidou:mybatis-plus-boot-starter:3.3.2'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3'
 //    compile 'org.redisson:redisson-spring-boot-starter:3.13.0'
 
     // 缓存 ehcache
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    // aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     // ehcache 3.x
 //    implementation 'org.ehcache:ehcache'
 //    implementation 'javax.cache:cache-api'
     // ehcache 2.x
-    implementation 'net.sf.ehcache:ehcache'
+    // implementation 'net.sf.ehcache:ehcache'
+    // 咖啡因缓存
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+    // 验证器
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // kafka
 //    implementation 'org.apache.kafka:kafka-streams'
@@ -27,7 +34,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper
 //    implementation("org.apache.zookeeper:zookeeper:3.6.1") {
-        // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
+    // 排除 slf4j-log4j12 包，它与 springboot 的 logback 日志有冲突
 //        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
 //        exclude group: 'org.slf4j', module: 'slf4j-api'
 //        exclude group: 'log4j', module: 'log4j'

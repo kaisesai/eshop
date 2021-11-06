@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 
-import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -23,25 +22,25 @@ public class ZooKeeperSession {
   private ZooKeeperSession() {
     // 异步连接，使用一个监听器来通知
     // 利用并发工具类 CountDownLatch 让函数等待
-    CountDownLatch connectedSemaphore = new CountDownLatch(1);
-    try {
-
-      Watcher watcher = new MyWatcher(connectedSemaphore);
-
-      zooKeeper = new ZooKeeper(ZookeeperConstant.CONNECT_STRING, ZookeeperConstant.SESSION_TIMEOUT,
-                                watcher);
-    } catch (IOException e) {
-      e.printStackTrace();
-      log.error("ZooKeeperSession 构造器异常", e);
-    }
-
-    try {
-      // 主线程阻塞等待
-      connectedSemaphore.await();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    log.info("zookeeper 初始化完毕");
+    // CountDownLatch connectedSemaphore = new CountDownLatch(1);
+    // try {
+    //
+    //   Watcher watcher = new MyWatcher(connectedSemaphore);
+    //
+    //   zooKeeper = new ZooKeeper(ZookeeperConstant.CONNECT_STRING, ZookeeperConstant.SESSION_TIMEOUT,
+    //                             watcher);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    //   log.error("ZooKeeperSession 构造器异常", e);
+    // }
+    //
+    // try {
+    //   // 主线程阻塞等待
+    //   connectedSemaphore.await();
+    // } catch (InterruptedException e) {
+    //   e.printStackTrace();
+    // }
+    // log.info("zookeeper 初始化完毕");
   }
 
   public static ZooKeeperSession getInstance() {

@@ -2,7 +2,6 @@ package com.liukai.eshop.cache.kafka;
 
 import com.liukai.eshop.cache.kafka.message.CommonMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MsgProducer {
 
-  @Autowired
+  // @Autowired
   private KafkaTemplate<Object, Object> kafkaTemplate;
 
   public void produceMsg(String topic, CommonMessage msg) {

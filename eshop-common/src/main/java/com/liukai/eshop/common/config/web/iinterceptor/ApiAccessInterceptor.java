@@ -1,4 +1,4 @@
-package com.liukai.eshop.common.web.iinterceptor;
+package com.liukai.eshop.common.config.web.iinterceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

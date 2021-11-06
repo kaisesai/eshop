@@ -1,7 +1,7 @@
-package com.liukai.eshop.common.web.config;
+package com.liukai.eshop.common.config.web;
 
+import com.liukai.eshop.common.model.Result;
 import com.liukai.eshop.common.util.JsonUtils;
-import com.liukai.eshop.common.web.model.Result;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

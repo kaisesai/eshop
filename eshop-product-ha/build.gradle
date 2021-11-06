@@ -6,6 +6,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 //    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
 //    runtimeOnly 'mysql:mysql-connector-java'
-//    implementation 'com.baomidou:mybatis-plus-boot-starter:3.3.2'
+//    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3'
 
 }
