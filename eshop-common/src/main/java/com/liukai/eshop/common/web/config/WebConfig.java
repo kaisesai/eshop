@@ -5,10 +5,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -23,7 +28,7 @@ import java.util.TimeZone;
  *
  * @author liukai
  */
-// @Configuration
+@Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
   
   // @Override
@@ -97,6 +102,9 @@ public class WebConfig extends WebMvcConfigurationSupport {
   //   super.addDefaultHttpMessageConverters(converters);
   // }
   
+  @Autowired
+  private MessageSource messageSource;
+  
   /**
    * 统一输出风格
    * See {@link PropertyNamingStrategy.SnakeCaseStrategy} for details.
@@ -107,29 +115,29 @@ public class WebConfig extends WebMvcConfigurationSupport {
   public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
     for (int i = 0; i < converters.size(); i++) {
       if (converters.get(i) instanceof MappingJackson2HttpMessageConverter) {
-  
+        
         //设置转换时的配置，具体视情况配置，如果通过此处配置，使用全局。也可以通过在bean的属性上添加注解配置对应的bean
         ObjectMapper objectMapper = new ObjectMapper();
         // 统一返回数据的输出风格
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
         // 时区
         objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-  
+        
         //序列化的时候序列对象的所有属性  
         objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         //属性为null的转换
         // objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-  
+        
         //反序列化的时候如果多了其他属性,不抛出异常  
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  
+        
         //如果是空对象的时候,不抛异常  
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-  
+        
         //取消时间的转化格式,默认是时间戳,可以取消,同时需要设置要表现的时间格式  
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-  
+        
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(objectMapper);
         converters.set(i, converter);
@@ -146,6 +154,13 @@ public class WebConfig extends WebMvcConfigurationSupport {
     filterRegistrationBean.setFilter(characterEncodingFilter);
     filterRegistrationBean.addUrlPatterns("/*");
     return filterRegistrationBean;
+  }
+  
+  @Override
+  protected Validator getValidator() {
+    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+    bean.setValidationMessageSource(messageSource);
+    return bean;
   }
   
 }

@@ -53,7 +53,7 @@ public class UserController {
   }
   
   @DeleteMapping(value = "/delete")
-  public Long deleteUser(@NotNull(message = "{message.notnull.id}") @RequestParam Long id) {
+  public Long deleteUser(@RequestParam Long id) {
     return userService.deleteById(id);
   }
   
