@@ -9,36 +9,32 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 
 @Configuration
 public class ValidationConfig {
-  
+
   @Bean
   public LocalValidatorFactoryBean validator(MessageSource messageSource) {
     LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
     bean.setValidationMessageSource(messageSource);
     return bean;
   }
-  
+
   @Bean
   public MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource
       = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasename("classpath:i18n");
+    messageSource.setBasename("classpath:/i18n/message");
     messageSource.setDefaultEncoding("UTF-8");
     return messageSource;
   }
-  /**
-   * @return 本地验证器工厂 bean
-   */
-  // @Bean
-  // public LocalValidatorFactoryBean validator() {
-  //   return new LocalValidatorFactoryBean();
-  // }
   
   /**
    * @return 方法验证后置处理器
    */
   @Bean
-  public MethodValidationPostProcessor validationPostProcessor() {
-    return new MethodValidationPostProcessor();
+  public MethodValidationPostProcessor validationPostProcessor(
+    LocalValidatorFactoryBean localValidatorFactoryBean) {
+    MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+    processor.setValidatorFactory(localValidatorFactoryBean);
+    return processor;
   }
   
 }

@@ -18,7 +18,7 @@ public interface UserService {
   
   User getById(Long id);
   
-  Long deleteById(@Min(value = 1, message = "message.notnull.id") Long id);
+  Long deleteById(@Min(value = 1, message = "{message.notnull.id}") Long id);
   
   User update(UserDTO userDTO);
   

@@ -14,7 +14,7 @@ import javax.validation.groups.Default;
 @Data
 public class UserDTO extends User {
   
-  @NotNull(groups = {Insert.class, Update.class, Default.class}, message = "message.notnull.id")
+  @NotNull(groups = {Insert.class, Update.class, Default.class}, message = "{message.notnull.id}")
   private Long myId;
   
   public User convertToUser() {

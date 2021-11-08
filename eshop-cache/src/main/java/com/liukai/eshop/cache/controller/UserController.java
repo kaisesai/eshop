@@ -27,7 +27,8 @@ public class UserController {
   
   @GetMapping(value = "get2")
   public User getUserById2(
-    @Min(message = "message.min.zero.id", value = 1) @RequestParam(value = "id") Long id) {
+    @Validated @Min(message = "{message.min.zero.id}", value = 1) @RequestParam(value = "id")
+      Long id) {
     return userService.getByIdFromCache2(id);
   }
   
@@ -52,7 +53,7 @@ public class UserController {
   }
   
   @DeleteMapping(value = "/delete")
-  public Long deleteUser(@NotNull(message = "message.notnull.id") @RequestParam Long id) {
+  public Long deleteUser(@NotNull(message = "{message.notnull.id}") @RequestParam Long id) {
     return userService.deleteById(id);
   }
   
